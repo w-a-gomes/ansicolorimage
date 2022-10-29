@@ -14,7 +14,8 @@ img = ImageColorMap(
 for item in img.ascii_lines:
     print(item)
 
-img = ImageColorMap(url_image=base_dir.as_posix() + '/examples/data/tux.png')
+img = ImageColorMap(
+    url_image=base_dir.as_posix() + '/examples/data/python.png')
 for item in img.ascii_lines:
     print(item)
 
@@ -27,7 +28,9 @@ for item in img.ascii_lines:
     print(item)
 
 img = ImageColorMap(
-    url_image=base_dir.as_posix() + '/examples/data/poe.png',
+    url_image=base_dir.as_posix() + '/examples/data/poe.jpg',
+    height=25,
+    width=50,
     show_background_color=True,
     hide_foreground_character=True)
 for item in img.ascii_lines:

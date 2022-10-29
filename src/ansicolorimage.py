@@ -39,16 +39,19 @@ class ImageColorMap(object):
         PPM (512, 512) RGB
         """
         # Image
-        warnings.filterwarnings('ignore')  # Fix RGBA warning
         image = Image.open(self.__url_image, 'r')
-        image = image.convert('RGB')
+        if image.mode != 'RGB':
+            warnings.filterwarnings('ignore')  # Fix RGBA warning
+            image = image.convert('RGB')
 
         # Resize
-        image = image.resize(
-            (self.__width, self.__height),
-            Image.Resampling.BICUBIC)  # type: ignore
+        h, w = image.size
+        if h != self.__height or w != self.__width:
+            image = image.resize(
+                (self.__width, self.__height),
+                Image.Resampling.BICUBIC)  # type: ignore
 
-        # Adjust colors
+        # Adjust color
         if self.__contrast != 1.0:
             contrast = ImageEnhance.Contrast(image)
             image = contrast.enhance(self.__contrast)
@@ -56,6 +59,7 @@ class ImageColorMap(object):
             brightness = ImageEnhance.Brightness(image)
             image = brightness.enhance(self.__brightness)
 
+        # Map
         ascii_line = ''
         loop_count = 0
         line_count = 0
@@ -65,18 +69,23 @@ class ImageColorMap(object):
             else:
                 r, g, b, _a = pixel
 
-            # github.com/EbonJaeger/asciifyer
-            pixel_brightness = ((0.2126 * r) + (0.7152 * g) + (0.0722 * b))
+            # Foreground:
+            #     set brightness to find ascii_map char index
+            pixel_brightness = (  # brightness: github.com/EbonJaeger/asciifyer
+                    (0.2126 * r) + (0.7152 * g) + (0.0722 * b))
 
-            ascii_str_index = int(
+            ascii_map_char_index = int(
                     (pixel_brightness / 255.0) * (len(self.__ascii_map)))
 
             foreground_character = ' '
             if not self.__hide_foreground_character:
-                foreground_character = self.__ascii_map[ascii_str_index]
+                foreground_character = self.__ascii_map[ascii_map_char_index]
 
+            # Background:
+            #     \x1b[48... for background or \x1b[38... for hidden background
+            bg_color = 48 if self.__show_background_color else 38
             ascii_line += '{}{}'.format(
-                self.rgb_to_ansi(r, g, b, self.__show_background_color),
+                f'\x1b[{bg_color};2;{r};{g};{b}m',
                 foreground_character)
 
             # Loop config
@@ -88,7 +97,6 @@ class ImageColorMap(object):
                 # Reset
                 ascii_line = ''
                 loop_count = 0
-
             else:
                 loop_count += 1
 
