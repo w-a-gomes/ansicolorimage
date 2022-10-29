@@ -13,14 +13,14 @@ def neon_ex():
         url_image=base_dir.as_posix() + '/examples/data/neon.png',
         contrast=1.3,
         brightness=0.85)
-    for line in img.ascii_lines:
+    for line in img.ansi_lines:
         print(line)
 
 
 def python_ex():
     img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/python.png')
-    for line in img.ascii_lines:
+    for line in img.ansi_lines:
         print(line)
 
 
@@ -29,8 +29,8 @@ def debian_ex():
         url_image=base_dir.as_posix() + '/examples/data/debian.png',
         contrast=1.2,
         brightness=0.95,
-        ascii_map=[' ', ' ', '*', '&'] + ['#'] * 20)
-    for line in img.ascii_lines:
+        chars_map=[' ', ' ', '*', '&'] + ['#'] * 20)
+    for line in img.ansi_lines:
         print(line)
 
 
@@ -65,7 +65,7 @@ def poe_ex():
         width=50,
         show_background_color=True,
         hide_foreground_character=True)
-    for text_line, img_line in zip(poem.split('\n'), img.ascii_lines):
+    for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
         print(img_line, text_line)
 
 
@@ -76,10 +76,14 @@ def kali_ex():
         width=60,
         contrast=1.2,
         brightness=0.95,
-        ascii_map=['0', '0'] + ['1'] * 25)
-    for line in img.ascii_lines:
+        chars_map=['0', '0'] + ['1'] * 25)
+    for line in img.ansi_lines:
         print(line)
 
 
 if __name__ == '__main__':
+    neon_ex()
     python_ex()
+    debian_ex()
+    poe_ex()
+    kali_ex()

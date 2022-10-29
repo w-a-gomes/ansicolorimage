@@ -8,35 +8,121 @@ class AnsiColorImage(object):
     def __init__(
             self,
             url_image: str,
-            height: int = 20,
-            width: int = 40,
-            contrast: float = 1.0,
+            # Defaults
             brightness: float = 1.0,
-            show_background_color: bool = False,
+            chars_map: list = None,
+            contrast: float = 1.0,
+            height: int = 20,
             hide_foreground_character: bool = False,
-            ascii_map: list = None) -> None:
+            show_background_color: bool = False,
+            width: int = 40) -> None:
         """..."""
-
-        self.__url_image = url_image
-        self.__height = height
-        self.__width = width
-        self.__contrast = contrast
-        self.__brightness = brightness
-        self.__show_background_color = show_background_color
-        self.__hide_foreground_character = hide_foreground_character
-        self.__ascii_lines = []
-        self.__ascii_map = ascii_map if ascii_map else [
+        __chars_map = [
             ' ', '´', '.', ':', ';', 'i', '/', 'l', 'j', 'h',
             'N', 'S', 'k', 'W', 'M', 'G', '0', '@', '#', '#']
+        self.__ansi_lines = []
+        self.__brightness = brightness
+        self.__chars_map = chars_map if chars_map else __chars_map
+        self.__contrast = contrast
+        self.__height = height
+        self.__hide_foreground_character = hide_foreground_character
+        self.__show_background_color = show_background_color
+        self.__url_image = url_image
+        self.__width = width
+
+        self.update_ascii_lines()
 
     @property
-    def ascii_lines(self) -> list:
+    def ansi_lines(self) -> list:
         """..."""
-        if not self.__ascii_lines:
-            self.__set_ascii_lines()
-        return self.__ascii_lines
+        return self.__ansi_lines
 
-    def __set_ascii_lines(self):
+    @ansi_lines.setter
+    def ansi_lines(self, ansi_lines: list) -> None:
+        """..."""
+        self.__ansi_lines = ansi_lines
+
+    @property
+    def brightness(self) -> float:
+        """..."""
+        return self.__brightness
+
+    @brightness.setter
+    def brightness(self, brightness: float) -> None:
+        """..."""
+        self.__brightness = brightness
+
+    @property
+    def chars_map(self) -> list:
+        """..."""
+        return self.__chars_map
+
+    @chars_map.setter
+    def chars_map(self, chars_map: list) -> None:
+        """..."""
+        self.__chars_map = chars_map
+
+    @property
+    def contrast(self) -> float:
+        """..."""
+        return self.__contrast
+
+    @contrast.setter
+    def contrast(self, contrast: float) -> None:
+        """..."""
+        self.__contrast = contrast
+
+    @property
+    def height(self) -> int:
+        """..."""
+        return self.__height
+
+    @height.setter
+    def height(self, height: int) -> None:
+        """..."""
+        self.__height = height
+
+    @property
+    def hide_foreground_character(self) -> bool:
+        """..."""
+        return self.__hide_foreground_character
+
+    @hide_foreground_character.setter
+    def hide_foreground_character(self, hide: bool) -> None:
+        """..."""
+        self.__hide_foreground_character = hide
+
+    @property
+    def show_background_color(self) -> bool:
+        """..."""
+        return self.__show_background_color
+
+    @show_background_color.setter
+    def show_background_color(self, show: bool) -> None:
+        """..."""
+        self.__show_background_color = show
+
+    @property
+    def url_image(self) -> str:
+        """..."""
+        return self.__url_image
+
+    @url_image.setter
+    def url_image(self, url_image: str) -> None:
+        """..."""
+        self.__url_image = url_image
+
+    @property
+    def width(self) -> int:
+        """..."""
+        return self.__width
+
+    @width.setter
+    def width(self, width: int) -> None:
+        """..."""
+        self.__width = width
+
+    def update_ascii_lines(self):
         # Image
         image = Image.open(self.__url_image, 'r')
         if image.mode != 'RGB':
@@ -75,11 +161,11 @@ class AnsiColorImage(object):
                     (0.2126 * r) + (0.7152 * g) + (0.0722 * b))
 
             ascii_map_char_index = int(
-                    (pixel_brightness / 255.0) * (len(self.__ascii_map)))
+                    (pixel_brightness / 255.0) * (len(self.__chars_map)))
 
             foreground_character = ' '
             if not self.__hide_foreground_character:
-                foreground_character = self.__ascii_map[ascii_map_char_index]
+                foreground_character = self.__chars_map[ascii_map_char_index]
 
             # Background:
             #     \x1b[48... for background or \x1b[38... for hidden background
@@ -91,7 +177,7 @@ class AnsiColorImage(object):
             # Loop config
             if loop_count + 1 == self.__width:
                 # Update line
-                self.__ascii_lines.append(ascii_line + '\x1B[0m')
+                self.__ansi_lines.append(ascii_line + '\x1B[0m')
                 line_count += 1
 
                 # Reset

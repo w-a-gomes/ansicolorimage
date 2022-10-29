@@ -8,16 +8,17 @@ Minimal example.
 
 ```python
 img = AnsiColorImage(url_image='python.png')
-for line in img.ascii_lines:
+for line in img.ansi_lines:
     print(line)
 ```
 ![Image](data/screen-python.png "screenshot")
 
 In addition to the basic adjustments like setting the dimensions and displaying the background color, you can also adjust the brightness and contrast for a better result.
 The `float` '**1.3**' is like **30%** and '**0.85**' is like **-15%**.
+
 ```python
 img = AnsiColorImage(url_image='neon.png', contrast=1.3, brightness=0.85)
-for line in img.ascii_lines:
+for line in img.ansi_lines:
     print(line)
 ```
 
@@ -57,13 +58,13 @@ img = AnsiColorImage(
     show_background_color=True,
     hide_foreground_character=True)
 
-for text_line, img_line in zip(poem.split('\n'), img.ascii_lines):
+for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
     print(img_line, text_line)
 ```
 ![Image](data/screen-poe.png "screenshot")
 
 Choosing the character map helps to achieve conceptual aesthetic results. For example, using 0 and 1 alluding to hacking in Kali's logo.
-Work with a gradient of around **20** characters. 
+Work with a gradient of around **20** characters.
 
 ```python
 img = AnsiColorImage(
@@ -72,8 +73,8 @@ img = AnsiColorImage(
     width=60,
     contrast=1.2,
     brightness=0.95,
-    ascii_map=['0', '0'] + ['1'] * 25)
-for line in img.ascii_lines:
+    chars_map=['0', '0'] + ['1'] * 25)
+for line in img.ansi_lines:
     print(line)
 ```
 ![Image](data/screen-kali.png "screenshot")
