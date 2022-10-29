@@ -62,8 +62,8 @@ for text_line, img_line in zip(poem.split('\n'), img.ascii_lines):
 ```
 ![Image](data/screen-poe.png "screenshot")
 
-Choosing the character map helps to achieve conceptual aesthetic results. 
-Work with a gradient of around **20** characters.
+Choosing the character map helps to achieve conceptual aesthetic results. For example, using 0 and 1 alluding to hacking in Kali's logo.
+Work with a gradient of around **20** characters. 
 
 ```python
 img = AnsiColorImage(
