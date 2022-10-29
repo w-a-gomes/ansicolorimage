@@ -4,34 +4,34 @@ import sys
 
 base_dir = pathlib.Path(__file__).resolve().parent.parent
 sys.path.append(base_dir.as_posix())
-from src.ansicolorimage import ImageColorMap
+from src.ansicolorimage import AnsiColorImage
 
 
 # /usr/share/pixmaps/neon.png
 def neon_ex():
-    img = ImageColorMap(
+    img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/neon.png',
         contrast=1.3,
         brightness=0.85)
-    for item in img.ascii_lines:
-        print(item)
+    for line in img.ascii_lines:
+        print(line)
 
 
 def python_ex():
-    img = ImageColorMap(
+    img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/python.png')
-    for item in img.ascii_lines:
-        print(item)
+    for line in img.ascii_lines:
+        print(line)
 
 
 def debian_ex():
-    img = ImageColorMap(
+    img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/debian.png',
         contrast=1.2,
         brightness=0.95,
         ascii_map=[' ', ' ', '*', '&'] + ['#'] * 20)
-    for item in img.ascii_lines:
-        print(item)
+    for line in img.ascii_lines:
+        print(line)
 
 
 def poe_ex():
@@ -59,26 +59,26 @@ def poe_ex():
     (By Edgar Allan Poe)
     
     """
-    img = ImageColorMap(
+    img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/poe.jpg',
         height=25,
         width=50,
         show_background_color=True,
         hide_foreground_character=True)
-    for txt, logo in zip(poem.split('\n'), img.ascii_lines):
-        print(logo, txt)
+    for text_line, img_line in zip(poem.split('\n'), img.ascii_lines):
+        print(img_line, text_line)
 
 
 def kali_ex():
-    img = ImageColorMap(
+    img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/kali.jpg',
         height=30,
         width=60,
         contrast=1.2,
         brightness=0.95,
         ascii_map=['0', '0'] + ['1'] * 25)
-    for item in img.ascii_lines:
-        print(item)
+    for line in img.ascii_lines:
+        print(line)
 
 
 if __name__ == '__main__':

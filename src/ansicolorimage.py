@@ -3,7 +3,8 @@ from PIL import Image, ImageEnhance
 import warnings
 
 
-class ImageColorMap(object):
+class AnsiColorImage(object):
+    """..."""
     def __init__(
             self,
             url_image: str,
@@ -13,7 +14,8 @@ class ImageColorMap(object):
             brightness: float = 1.0,
             show_background_color: bool = False,
             hide_foreground_character: bool = False,
-            ascii_map: list = None):
+            ascii_map: list = None) -> None:
+        """..."""
 
         self.__url_image = url_image
         self.__height = height
@@ -29,15 +31,12 @@ class ImageColorMap(object):
 
     @property
     def ascii_lines(self) -> list:
+        """..."""
         if not self.__ascii_lines:
             self.__set_ascii_lines()
         return self.__ascii_lines
 
     def __set_ascii_lines(self):
-        """
-        print(im.format, im.size, im.mode)
-        PPM (512, 512) RGB
-        """
         # Image
         image = Image.open(self.__url_image, 'r')
         if image.mode != 'RGB':
@@ -64,6 +63,7 @@ class ImageColorMap(object):
         loop_count = 0
         line_count = 0
         for pixel in list(image.getdata()):
+            # RGB
             if len(pixel) == 3:
                 r, g, b = pixel
             else:
@@ -99,10 +99,6 @@ class ImageColorMap(object):
                 loop_count = 0
             else:
                 loop_count += 1
-
-    @staticmethod
-    def rgb_to_ansi(r: int, g: int, b: int, background: bool) -> str:
-        return f"\x1b[{48 if background else 38};2;{r};{g};{b}m"
 
 
 if __name__ == '__main__':
