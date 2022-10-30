@@ -80,11 +80,11 @@ def kali_ex():
     for line in img.ansi_lines:
         print(line)
 
-    img.url_image = base_dir.as_posix() + '/examples/data/neon.png'
     img.width = None
     img.height = None
-    img.chars_map = None
+    # img.chars_map = None
     img.update_ascii_lines()
+
     for line in img.ansi_lines:
         print(line)
 

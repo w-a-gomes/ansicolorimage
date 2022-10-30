@@ -203,6 +203,9 @@ class AnsiColorImage(object):
         no visible effect if no property has been modified.
         Use the 'ansi_lines' property to get the new updated list.
         """
+        # Reset ansi_lines
+        self.__ansi_lines = []
+
         # Image
         image = Image.open(self.__url_image, 'r')
         if image.mode != 'RGB':
