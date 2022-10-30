@@ -4,7 +4,10 @@ import warnings
 
 
 class AnsiColorImage(object):
-    """..."""
+    """ANSI from an image
+
+    Create figures with text characters and ANSI colors from an image file.
+    """
     def __init__(
             self,
             url_image: str,
@@ -16,7 +19,7 @@ class AnsiColorImage(object):
             hide_foreground_character: bool = False,
             show_background_color: bool = False,
             width: int = 40) -> None:
-        """..."""
+        """Class constructor"""
         self.__default_chars_map = [
             ' ', '´', '.', ':', ';', 'i', '/', 'l', 'j', 'h',
             'N', 'S', 'k', 'W', 'M', 'G', '0', '@', '#', '#']
@@ -34,107 +37,172 @@ class AnsiColorImage(object):
 
     @property
     def ansi_lines(self) -> list:
-        """..."""
+        """Getter: list
+        A list of lines representing the image. Each item is a line.
+        This 'property' does not contain 'setter', so use properties like
+        'url_image' together with 'update_ascii_lines()' method to
+        update the list.
+        """
         return self.__ansi_lines
-
-    @ansi_lines.setter
-    def ansi_lines(self, ansi_lines: list) -> None:
-        """..."""
-        if ansi_lines:
-            self.__ansi_lines = ansi_lines
 
     @property
     def brightness(self) -> float:
-        """..."""
+        """Getter: float
+        Get the image brightness
+
+        Setter: float
+        Set the image brightness
+
+        The 'float' 1.3 is like 30% and 0.85 is like -15%.
+        Use 'None' to reset. Default is 1.0.
+        """
         return self.__brightness
 
     @brightness.setter
     def brightness(self, brightness: float) -> None:
-        """..."""
         self.__brightness = brightness if brightness else 1.0
 
     @property
     def chars_map(self) -> list:
-        """..."""
+        """Getter: list
+        Get the list of characters that can be used to draw the image.
+
+        Setter: list
+        Set the list of characters that can be used to draw the image.
+
+        The first characters represent the darkest colors, and the last
+        characters in the list represent the lightest colors, so the
+        characters in the middle of the list are the halftones, thus forming
+        a gradient.
+        Normally, for dark colors we use characters with little filling, like
+        a dot and a comma, while for lighter colors it's the opposite, like an
+        at sign.
+        Example:
+
+            [' ', '.', ';', 'n', 's', 'k', '&', '@', '#']
+             |___________|  |___________|  |___________|
+                  |              |              |
+             Dark-shades    Half-tones     Light-shades
+
+         A list of approximately 20 characters or a little longer is ideal.
+        """
         return self.__chars_map
 
     @chars_map.setter
     def chars_map(self, chars_map: list) -> None:
-        """..."""
         self.__chars_map = chars_map if chars_map else self.__default_chars_map
 
     @property
     def contrast(self) -> float:
-        """..."""
+        """Getter: float
+        Get the image contrast
+
+        Setter: float
+        Set the image contrast
+
+        The 'float' 1.3 is like 30% and 0.85 is like -15%.
+        Use 'None' to reset. Default is 1.0.
+        """
         return self.__contrast
 
     @contrast.setter
     def contrast(self, contrast: float) -> None:
-        """..."""
         self.__contrast = contrast if contrast else 1.0
 
     @property
     def height(self) -> int:
-        """Get height in number of lines"""
+        """Getter: int
+        Get height in number of lines
+
+        Setter: int
+        Set height in number of lines
+
+        Use 'None' to reset. Default is 20.
+        """
         return self.__height
 
     @height.setter
     def height(self, height: int) -> None:
-        """Set height in number of lines
-        
-        Use None to reset. Default is 20.
-
-        :param height: number of lines
-        """
         self.__height = height if height else 20
 
     @property
     def hide_foreground_character(self) -> bool:
-        """..."""
+        """Getter: bool
+        Get foreground character usage status
+
+        Setter: bool
+        Set foreground character usage status
+
+        If set to 'True', the foreground character will be displayed.
+        Use 'None' to reset. Default is 'False'.
+        """
         return self.__hide_foreground_character
 
     @hide_foreground_character.setter
     def hide_foreground_character(self, hide: bool) -> None:
-        """..."""
         self.__hide_foreground_character = hide if hide else False
 
     @property
     def show_background_color(self) -> bool:
-        """..."""
+        """Getter: bool
+        Get background color usage status
+
+        Setter: bool
+        Set background color usage status
+
+        If set to 'True', the background color will be displayed.
+        Use 'None' to reset. Default is 'False'.
+        """
         return self.__show_background_color
 
     @show_background_color.setter
     def show_background_color(self, show: bool) -> None:
-        """..."""
         self.__show_background_color = show if show else False
 
     @property
     def url_image(self) -> str:
-        """..."""
+        """Getter: str
+        Get the image file path
+
+        Setter: str
+        Set path of an image file in the operating system
+
+        Don't use very specific usage images format like 'svg'.
+        Use common raster images like 'png', 'jpg' and 'jpeg'.
+        Prefer 'jpg' images with a black background as they are faster
+        and more accurate for conversion.
+        'None' has no effect.
+        """
         return self.__url_image
 
     @url_image.setter
     def url_image(self, url_image: str) -> None:
-        """..."""
         if url_image:
             self.__url_image = url_image
 
     @property
     def width(self) -> int:
-        """Get width in number of columns"""
+        """Getter: int
+        Get width in number of columns
+
+        Setter: int
+        Set width in number of columns
+
+        Use 'None' to reset. Default is 40.
+        """
         return self.__width
 
     @width.setter
     def width(self, width: int) -> None:
-        """Set width in number of columns
-
-        Use None to reset. Default is 40.
-
-        :param width: number of columns
-        """
         self.__width = width if width else 40
 
-    def update_ascii_lines(self):
+    def update_ascii_lines(self) -> None:
+        """Update the 'ansi_lines' property
+
+        This method is used to apply changes to property values and will have
+        no visible effect if no property has been modified.
+        Use the 'ansi_lines' property to get the new updated list.
+        """
         # Image
         image = Image.open(self.__url_image, 'r')
         if image.mode != 'RGB':
