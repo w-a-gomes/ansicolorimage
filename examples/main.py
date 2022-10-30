@@ -80,10 +80,18 @@ def kali_ex():
     for line in img.ansi_lines:
         print(line)
 
+    img.url_image = base_dir.as_posix() + '/examples/data/neon.png'
+    img.width = None
+    img.height = None
+    img.chars_map = None
+    img.update_ascii_lines()
+    for line in img.ansi_lines:
+        print(line)
+
 
 if __name__ == '__main__':
-    neon_ex()
-    python_ex()
-    debian_ex()
-    poe_ex()
+    # neon_ex()
+    # python_ex()
+    # debian_ex()
+    # poe_ex()
     kali_ex()

@@ -17,12 +17,12 @@ class AnsiColorImage(object):
             show_background_color: bool = False,
             width: int = 40) -> None:
         """..."""
-        __chars_map = [
+        self.__default_chars_map = [
             ' ', '´', '.', ':', ';', 'i', '/', 'l', 'j', 'h',
             'N', 'S', 'k', 'W', 'M', 'G', '0', '@', '#', '#']
         self.__ansi_lines = []
         self.__brightness = brightness
-        self.__chars_map = chars_map if chars_map else __chars_map
+        self.__chars_map = chars_map if chars_map else self.__default_chars_map
         self.__contrast = contrast
         self.__height = height
         self.__hide_foreground_character = hide_foreground_character
@@ -40,7 +40,8 @@ class AnsiColorImage(object):
     @ansi_lines.setter
     def ansi_lines(self, ansi_lines: list) -> None:
         """..."""
-        self.__ansi_lines = ansi_lines
+        if ansi_lines:
+            self.__ansi_lines = ansi_lines
 
     @property
     def brightness(self) -> float:
@@ -50,7 +51,7 @@ class AnsiColorImage(object):
     @brightness.setter
     def brightness(self, brightness: float) -> None:
         """..."""
-        self.__brightness = brightness
+        self.__brightness = brightness if brightness else 1.0
 
     @property
     def chars_map(self) -> list:
@@ -60,7 +61,7 @@ class AnsiColorImage(object):
     @chars_map.setter
     def chars_map(self, chars_map: list) -> None:
         """..."""
-        self.__chars_map = chars_map
+        self.__chars_map = chars_map if chars_map else self.__default_chars_map
 
     @property
     def contrast(self) -> float:
@@ -70,17 +71,22 @@ class AnsiColorImage(object):
     @contrast.setter
     def contrast(self, contrast: float) -> None:
         """..."""
-        self.__contrast = contrast
+        self.__contrast = contrast if contrast else 1.0
 
     @property
     def height(self) -> int:
-        """..."""
+        """Get height in number of lines"""
         return self.__height
 
     @height.setter
     def height(self, height: int) -> None:
-        """..."""
-        self.__height = height
+        """Set height in number of lines
+        
+        Use None to reset. Default is 20.
+
+        :param height: number of lines
+        """
+        self.__height = height if height else 20
 
     @property
     def hide_foreground_character(self) -> bool:
@@ -90,7 +96,7 @@ class AnsiColorImage(object):
     @hide_foreground_character.setter
     def hide_foreground_character(self, hide: bool) -> None:
         """..."""
-        self.__hide_foreground_character = hide
+        self.__hide_foreground_character = hide if hide else False
 
     @property
     def show_background_color(self) -> bool:
@@ -100,7 +106,7 @@ class AnsiColorImage(object):
     @show_background_color.setter
     def show_background_color(self, show: bool) -> None:
         """..."""
-        self.__show_background_color = show
+        self.__show_background_color = show if show else False
 
     @property
     def url_image(self) -> str:
@@ -110,17 +116,23 @@ class AnsiColorImage(object):
     @url_image.setter
     def url_image(self, url_image: str) -> None:
         """..."""
-        self.__url_image = url_image
+        if url_image:
+            self.__url_image = url_image
 
     @property
     def width(self) -> int:
-        """..."""
+        """Get width in number of columns"""
         return self.__width
 
     @width.setter
     def width(self, width: int) -> None:
-        """..."""
-        self.__width = width
+        """Set width in number of columns
+
+        Use None to reset. Default is 40.
+
+        :param width: number of columns
+        """
+        self.__width = width if width else 40
 
     def update_ascii_lines(self):
         # Image
