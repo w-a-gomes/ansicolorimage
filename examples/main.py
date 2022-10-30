@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import pathlib
 import sys
+import os
+import time
 
 base_dir = pathlib.Path(__file__).resolve().parent.parent
 sys.path.append(base_dir.as_posix())
@@ -89,9 +91,28 @@ def kali_ex():
         print(line)
 
 
+def gif_ex():
+    img_frames = os.listdir(base_dir.as_posix() + '/examples/data/frames/')
+    img_frames.sort()
+    images = [
+        AnsiColorImage(
+            url_image=base_dir.as_posix() + '/examples/data/frames/' + fr,
+            height=25,
+            width=85)
+        for fr in img_frames]
+
+    for image in images * 5:
+        time.sleep(0.2)
+        os.system('clear')
+
+        for line in image.ansi_lines:
+            print(line)
+
+
 if __name__ == '__main__':
+    gif_ex()
     # neon_ex()
     # python_ex()
     # debian_ex()
     # poe_ex()
-    kali_ex()
+    # kali_ex()

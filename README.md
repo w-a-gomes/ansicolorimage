@@ -1,4 +1,4 @@
-# ansicolorimage
+# AnsiColorImage
 Python lib to create figures with text characters and ANSI colors from an image file 
 
 
@@ -12,17 +12,6 @@ for line in img.ansi_lines:
     print(line)
 ```
 ![Image](data/screen-python.png "screenshot")
-
-In addition to the basic adjustments like setting the dimensions and displaying the background color, you can also adjust the brightness and contrast for a better result.
-The `float` '**1.3**' is like **30%** and '**0.85**' is like **-15%**.
-
-```python
-img = AnsiColorImage(url_image='neon.png', contrast=1.3, brightness=0.85)
-for line in img.ansi_lines:
-    print(line)
-```
-
-![Image](data/screen-neon.png "screenshot")
 
 Each item represents a line, making it easy to enter parallel information.
 
@@ -63,6 +52,8 @@ for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
 ```
 ![Image](data/screen-poe.png "screenshot")
 
+### Custom character map
+
 Choosing the character map helps to achieve conceptual aesthetic results. For example, using 0 and 1 alluding to hacking in Kali's logo.
 Work with a gradient of around **20** characters.
 
@@ -78,3 +69,24 @@ for line in img.ansi_lines:
     print(line)
 ```
 ![Image](data/screen-kali.png "screenshot")
+
+### Animation
+
+Make a gif 🙃
+
+```python
+img_frames = os.listdir('wifi-images/')  # import os
+img_frames.sort()  # ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png']
+
+images = [
+    AnsiColorImage(url_image='wifi-images/' + x, height=25, width=85)
+    for x in img_frames]
+
+for image in images * 5:
+    time.sleep(0.2)     # import time
+    os.system('clear')  # import os
+    
+    for line in image.ansi_lines:
+        print(line)
+```
+![Image](data/wifi.gif "screenshot")
