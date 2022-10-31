@@ -50,7 +50,6 @@ AnsiColorImage:
 Each item represents a line, making it easy to enter parallel information.
 I will also use the accent color to color the text with a vintage look, just like the image.
 
-Understand the color formatting in the link:: https://github.com/termstandard/colors
 ```python
 poem = """
     
@@ -87,6 +86,7 @@ for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
     print(
         img_line,
         f'\x1b[38;2;{img.image_accent_color}m{text_line}\x1B[0m')
+        # See how to format colors -> https://github.com/termstandard/colors
 ```
 ![Image](data/screen-poe.png "screenshot")
 
