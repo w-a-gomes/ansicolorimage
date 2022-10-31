@@ -149,6 +149,11 @@ class AnsiColorImage(object):
         """Getter: str
         Gets the image's accent color as a string with an RGB pattern, and
         values separated by semicolons, such as: '192;0;53'.
+        Use with truecolors pattern. Ex:
+            "\\x1b[38;2;192;0;53m MY-TEXT-HERE \x1B[0m"
+
+        Understand the color formatting in the link:
+            https://github.com/termstandard/colors
 
         Setter: str
         Set the image's accent color with an RGB pattern string and

@@ -4,7 +4,7 @@ Python lib to create figures with text characters and ANSI colors from an image 
 
 https://github.com/w-a-gomes/ansicolorimage
 
-Minimal example.
+### Minimal example.
 
 ```python
 img = AnsiColorImage(url_image='python.png')
@@ -13,8 +13,44 @@ for line in img.ansi_lines:
 ```
 ![Image](data/screen-python.png "screenshot")
 
-Each item represents a line, making it easy to enter parallel information.
+### Definition
+Use `help()` for details.
+```
+AnsiColorImage:
+    Parameters:
+        url_image
+    
+    Optional parameters:
+        brightness
+        chars_map
+        contrast
+        height
+        hide_foreground_character
+        show_background_color
+        width
 
+    Properties:
+        ansi_lines
+        brightness
+        chars_map
+        contrast
+        height
+        hide_foreground_character
+        image_accent_color
+        show_background_color
+        url_image
+        width
+    
+    Methods:
+        update_ascii_lines
+        
+```
+
+### Easy handling
+Each item represents a line, making it easy to enter parallel information.
+I will also use the accent color to color the text with a vintage look, just like the image.
+
+Understand the color formatting in the link:: https://github.com/termstandard/colors
 ```python
 poem = """
     
@@ -48,7 +84,9 @@ img = AnsiColorImage(
     hide_foreground_character=True)
 
 for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
-    print(img_line, text_line)
+    print(
+        img_line,
+        f'\x1b[38;2;{img.image_accent_color}m{text_line}\x1B[0m')
 ```
 ![Image](data/screen-poe.png "screenshot")
 
