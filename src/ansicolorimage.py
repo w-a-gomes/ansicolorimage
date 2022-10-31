@@ -146,7 +146,17 @@ class AnsiColorImage(object):
 
     @property
     def image_accent_color(self) -> str:
-        """..."""
+        """Getter: str
+        Gets the image's accent color as a string with an RGB pattern, and
+        values separated by semicolons, such as: '192;0;53'.
+
+        Setter: str
+        Set the image's accent color with an RGB pattern string and
+        semicolon-separated values such as: '192;0;53'. Any different pattern
+        will not change the property value.
+        To reset use 'None'.
+        If the image is changed, the accent color is automatically updated.
+        """
         if self.__image_accent_color:
             return self.__image_accent_color
 
@@ -162,9 +172,9 @@ class AnsiColorImage(object):
             r, g, b = rgb.split(';')
 
             # Remove black and white colors (all combination: rg b, rb g, gb r)
-            if (  # One need > 50
+            if (  # 50 Must have 1 color greater than 50
                     (int(r) > 50 or int(g) > 50 or int(b) > 50) and
-                    (  # One need 2 colors < 200
+                    (  # Must have 2 colors smaller than 200
                         (int(r) < 200 and int(g) < 200) or
                         (int(r) < 200 and int(b) < 200) or
                         (int(g) < 200 and int(b) < 200)
@@ -256,8 +266,9 @@ class AnsiColorImage(object):
         no visible effect if no property has been modified.
         Use the 'ansi_lines' property to get the new updated list.
         """
-        # Reset ansi_lines
+        # Reset ansi_lines and accent color
         self.__ansi_lines = []
+        self.__image_accent_color = None
 
         # Image
         image = Image.open(self.__url_image, 'r')

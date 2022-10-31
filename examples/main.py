@@ -123,10 +123,41 @@ def gif_ex():
             '\x1B[0m')
 
 
+def accent_color():
+    img = AnsiColorImage(
+        url_image=base_dir.as_posix() + '/examples/data/debian.png',
+        contrast=1.2,
+        brightness=0.95,
+        chars_map=[' ', ' ', '*', '&'] + ['#'] * 20)
+    for line in img.ansi_lines:
+        print(line)
+
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
+    img.image_accent_color = '85;170;0'
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
+    img.image_accent_color = None
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
+    img.url_image = base_dir.as_posix() + '/examples/data/neon.png'
+    img.update_ascii_lines()
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
+
 if __name__ == '__main__':
-    gif_ex()
+    # gif_ex()
     neon_ex()
-    python_ex()
-    debian_ex()
-    poe_ex()
-    kali_ex()
+    # python_ex()
+    # debian_ex()
+    # poe_ex()
+    # kali_ex()
+    # accent_color()
