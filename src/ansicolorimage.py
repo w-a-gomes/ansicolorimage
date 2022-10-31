@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from PIL import Image, ImageEnhance
+import re
 import warnings
 
 
@@ -29,6 +30,7 @@ class AnsiColorImage(object):
         self.__contrast = contrast
         self.__height = height
         self.__hide_foreground_character = hide_foreground_character
+        self.__image_accent_color = None
         self.__show_background_color = show_background_color
         self.__url_image = url_image
         self.__width = width
@@ -140,7 +142,58 @@ class AnsiColorImage(object):
 
     @hide_foreground_character.setter
     def hide_foreground_character(self, hide: bool) -> None:
-        self.__hide_foreground_character = hide if hide else False
+        self.__hide_foreground_character = hide
+
+    @property
+    def image_accent_color(self) -> str:
+        """..."""
+        if self.__image_accent_color:
+            return self.__image_accent_color
+
+        # Colors ['red', 'blue', 'black']
+        colors_found = []
+        for line in self.__ansi_lines:
+            colors_found += re.findall('\\x1b\[\d+;\d+;\d+;\d+;\d+m', line)
+
+        # Count {'red': 2, 'blue': 5, 'black': 22}
+        colors_count = {}
+        for color in colors_found:
+            rgb = color[7:-1]  # '\x1b[38;2;0;0;0m'[7:-1] -> '0;0;0'
+            r, g, b = rgb.split(';')
+
+            # Remove black and white colors (all combination: rg b, rb g, gb r)
+            if (  # One need > 50
+                    (int(r) > 50 or int(g) > 50 or int(b) > 50) and
+                    (  # One need 2 colors < 200
+                        (int(r) < 200 and int(g) < 200) or
+                        (int(r) < 200 and int(b) < 200) or
+                        (int(g) < 200 and int(b) < 200)
+                    )
+            ):
+                if rgb not in colors_count:
+                    colors_count[rgb] = 1
+                else:
+                    colors_count[rgb] += 1
+
+        # Save biggest number color
+        saved_color, saved_num = ('255;255;255', 0)
+        for color, num in colors_count.items():
+            if num > saved_num:
+                saved_color, saved_num = (color, num)
+        self.__image_accent_color = saved_color
+
+        return self.__image_accent_color
+
+    @image_accent_color.setter
+    def image_accent_color(self, color: str) -> None:
+        if color:
+            regex_color = re.findall('\d+;\d+;\d+', color)
+            if regex_color:
+                if color == regex_color[0]:
+                    self.__image_accent_color = color
+            return
+
+        self.__image_accent_color = color
 
     @property
     def show_background_color(self) -> bool:
@@ -157,7 +210,7 @@ class AnsiColorImage(object):
 
     @show_background_color.setter
     def show_background_color(self, show: bool) -> None:
-        self.__show_background_color = show if show else False
+        self.__show_background_color = show
 
     @property
     def url_image(self) -> str:

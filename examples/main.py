@@ -18,12 +18,19 @@ def neon_ex():
     for line in img.ansi_lines:
         print(line)
 
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
 
 def python_ex():
     img = AnsiColorImage(
         url_image=base_dir.as_posix() + '/examples/data/python.png')
     for line in img.ansi_lines:
         print(line)
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
 
 
 def debian_ex():
@@ -34,6 +41,9 @@ def debian_ex():
         chars_map=[' ', ' ', '*', '&'] + ['#'] * 20)
     for line in img.ansi_lines:
         print(line)
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
 
 
 def poe_ex():
@@ -70,6 +80,10 @@ def poe_ex():
     for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
         print(img_line, text_line)
 
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
 
 def kali_ex():
     img = AnsiColorImage(
@@ -82,13 +96,9 @@ def kali_ex():
     for line in img.ansi_lines:
         print(line)
 
-    img.width = None
-    img.height = None
-    # img.chars_map = None
-    img.update_ascii_lines()
-
-    for line in img.ansi_lines:
-        print(line)
+    print(
+        'accent_color: '
+        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
 
 
 def gif_ex():
@@ -107,12 +117,16 @@ def gif_ex():
 
         for line in image.ansi_lines:
             print(line)
+        print(
+            'accent_color: '
+            f'\x1b[38;2;{image.image_accent_color}m{image.image_accent_color}'
+            '\x1B[0m')
 
 
 if __name__ == '__main__':
     gif_ex()
-    # neon_ex()
-    # python_ex()
-    # debian_ex()
-    # poe_ex()
-    # kali_ex()
+    neon_ex()
+    python_ex()
+    debian_ex()
+    poe_ex()
+    kali_ex()
