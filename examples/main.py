@@ -41,9 +41,7 @@ def debian_ex():
         chars_map=[' ', ' ', '*', '&'] + ['#'] * 20)
     for line in img.ansi_lines:
         print(line)
-    print(
-        'accent_color: '
-        f'\x1b[38;2;{img.image_accent_color}m{img.image_accent_color}\x1B[0m')
+
 
 
 def poe_ex():
@@ -158,8 +156,8 @@ def accent_color():
 if __name__ == '__main__':
     # gif_ex()
     neon_ex()
-    # python_ex()
-    # debian_ex()
+    python_ex()
+    debian_ex()
     poe_ex()
-    # kali_ex()
+    kali_ex()
     # accent_color()

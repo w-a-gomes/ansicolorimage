@@ -11,7 +11,7 @@ img = AnsiColorImage(url_image='python.png')
 for line in img.ansi_lines:
     print(line)
 ```
-![Image](data/screen-python.png "screenshot")
+![Image](data/screens.png "screenshot")
 
 ### Definition
 Use `help()` for details.
