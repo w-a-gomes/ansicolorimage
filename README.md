@@ -115,7 +115,7 @@ img_frames = os.listdir('image-frames/')  # import os
 img_frames.sort()  # ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png']
 
 images = [
-    AnsiColorImage(url_image='wifi-images/' + x, height=25, width=85)
+    AnsiColorImage(url_image='wifi-images/' + x, height=20, width=40)
     for x in img_frames]
 
 for image in images * 5:
