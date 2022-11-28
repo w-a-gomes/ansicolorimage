@@ -92,28 +92,26 @@ for text_line, img_line in zip(poem.split('\n'), img.ansi_lines):
 
 ### Custom character map
 
-Choosing the character map helps to achieve conceptual aesthetic results. For example, using 0 and 1 alluding to hacking in Kali's logo.
+Choosing the character map helps to achieve conceptual aesthetic results. For example, using 0 and 1 alluding to hacking.
 Work with a gradient of around **20** characters.
 
 ```python
 img = AnsiColorImage(
-    url_image='kali.jpg',
-    height=30,
-    width=60,
-    contrast=1.2,
-    brightness=0.95,
-    chars_map=['0', '0'] + ['1'] * 25)
-for line in img.ansi_lines:
-    print(line)
+        url_image='bin.png',
+        height=20,
+        width=80,
+        contrast=1.2,
+        brightness=0.95,
+        chars_map=['0', '0', '0', '0', '0'] + ['1'] * 15)
+    for line in img.ansi_lines:
+        print(line)
 ```
-![Image](data/screen-kali.png "screenshot")
+![Image](data/screen-bin.png "screenshot")
 
-### Animation
-
-Make a gif 🙃
+### Make an animation
 
 ```python
-img_frames = os.listdir('wifi-images/')  # import os
+img_frames = os.listdir('image-frames/')  # import os
 img_frames.sort()  # ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png']
 
 images = [
@@ -127,4 +125,4 @@ for image in images * 5:
     for line in image.ansi_lines:
         print(line)
 ```
-![Image](data/wifi.gif "screenshot")
+![Image](data/animation.gif "screenshot")
