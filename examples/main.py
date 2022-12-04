@@ -119,17 +119,13 @@ def bin_ex():
 def gif_ex():
     img_frames = os.listdir(base_dir.as_posix() + '/examples/data/frames/')
     img_frames.sort()
-    images = [
-        AnsiColorImage(
-            url_image=base_dir.as_posix() + '/examples/data/frames/' + fr,
-            height=20,
-            width=40)
-        for fr in img_frames]
 
-    for image in images * 5:
+    for image in [
+        AnsiColorImage(url_image=base_dir.as_posix() + '/examples/data/frames/' + x, height=20, width=40)
+        for x in img_frames] * 5:
+
         time.sleep(0.2)
         os.system('clear')
-
         for line in image.ansi_lines:
             print(line)
         # print(
