@@ -111,11 +111,11 @@ img = AnsiColorImage(
 ### Make an animation
 
 ```python
-img_frames = os.listdir('image-frames/')  # import os
+img_frames = os.listdir('frames')  # import os
 img_frames.sort()  # ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png']
 
 for image in [
-    AnsiColorImage(url_image='wifi-images/' + x, height=20, width=40)
+    AnsiColorImage(url_image=os.path.join('frames', x), height=20, width=40)
     for x in img_frames] * 5:
 
     time.sleep(0.2)     # import time
