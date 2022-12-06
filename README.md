@@ -1,8 +1,7 @@
 # AnsiColorImage
 Python lib to create figures with text characters and ANSI colors from an image file 
 
-
-https://github.com/w-a-gomes/ansicolorimage
+https://github.com/wbin01/ansicolorimage
 
 ### Minimal example.
 
